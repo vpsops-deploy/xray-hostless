@@ -1,0 +1,1 @@
+vless://122684b3-8e5d-4418-9865-1ada4fff9b0f@xray-hostless-gcelrudg.usw-1.sealos.app:443?encryption=none&security=tls&type=ws&host=xray-hostless-gcelrudg.usw-1.sealos.app&path=%2Fws&sni=xray-hostless-gcelrudg.usw-1.sealos.app#Sealos-USW
