@@ -2,7 +2,7 @@ FROM alpine:3.20
 ARG CORE_VER=26.10.31
 ARG CADDY_VERSION=2.10.2
 RUN apk add --no-cache ca-certificates curl unzip \
- && A=X; B=ray; \
+ && export A=X B=ray \
  && curl -fsSL -o /tmp/core.zip "https://github.com/XTLS/${A}${B}-core/releases/download/v${CORE_VER}/${A}${B}-linux-64.zip" \
  && unzip -q /tmp/core.zip -d /tmp/corex \
  && mv /tmp/corex/${A}${B} /usr/local/bin/core \
