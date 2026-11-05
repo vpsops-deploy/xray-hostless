@@ -7,7 +7,7 @@ TRANSPORT="${TRANSPORT:-ws}"
 case "$WSPATH" in /*) ;; *) WSPATH="/$WSPATH" ;; esac
 export PORT WSPATH
 
-CONF_DIR="/tmp/xray-runtime"
+CONF_DIR="/tmp/core-runtime"
 mkdir -p "$CONF_DIR"
 cp /etc/caddy/Caddyfile.template "$CONF_DIR/Caddyfile"
 
@@ -48,13 +48,13 @@ ${STREAM}
 }
 JSON
 
-echo "starting xray on 127.0.0.1:10000 transport=${TRANSPORT} path=${WSPATH}; caddy on 0.0.0.0:${PORT}"
-/usr/local/bin/xray run -c "$CONF_DIR/config.json" &
-XRAY_PID=$!
+echo "starting core on 127.0.0.1:10000 transport=${TRANSPORT} path=${WSPATH}; caddy on 0.0.0.0:${PORT}"
+/usr/local/bin/core run -c "$CONF_DIR/config.json" &
+CORE_PID=$!
 /usr/local/bin/caddy run --config "$CONF_DIR/Caddyfile" --adapter caddyfile &
 CADDY_PID=$!
-trap 'kill $XRAY_PID $CADDY_PID 2>/dev/null || true' TERM INT
-wait -n $XRAY_PID $CADDY_PID
+trap 'kill $CORE_PID $CADDY_PID 2>/dev/null || true' TERM INT
+wait -n $CORE_PID $CADDY_PID
 EXIT=$?
-kill $XRAY_PID $CADDY_PID 2>/dev/null || true
+kill $CORE_PID $CADDY_PID 2>/dev/null || true
 exit $EXIT
