@@ -5,12 +5,11 @@ UUID="${UUID:?UUID env required}"
 WSPATH="${WSPATH:-/ws}"
 TRANSPORT="${TRANSPORT:-ws}"
 case "$WSPATH" in /*) ;; *) WSPATH="/$WSPATH" ;; esac
+export PORT WSPATH
 
 CONF_DIR="/tmp/xray-runtime"
 mkdir -p "$CONF_DIR"
-export PORT WSPATH
-# Caddy uses {$VAR} in Caddyfile
-sed -e "s|\${PORT}|${PORT}|g" -e "s|\${WSPATH}|${WSPATH}|g" /etc/caddy/Caddyfile.template > "$CONF_DIR/Caddyfile"
+cp /etc/caddy/Caddyfile.template "$CONF_DIR/Caddyfile"
 
 if [ "$TRANSPORT" = "xhttp" ]; then
   STREAM=$(cat <<JSON
