@@ -1,18 +1,24 @@
 worker_processes 1;
 error_log /dev/stderr warn;
-pid /tmp/nginx.pid;
+pid /tmp/xray-runtime/nginx.pid;
 events { worker_connections 1024; }
 http {
   access_log /dev/stdout;
+  client_body_temp_path /tmp/nginx-logs/client_body;
+  proxy_temp_path /tmp/nginx-logs/proxy;
+  fastcgi_temp_path /tmp/nginx-logs/fastcgi;
+  uwsgi_temp_path /tmp/nginx-logs/uwsgi;
+  scgi_temp_path /tmp/nginx-logs/scgi;
   map $http_upgrade $connection_upgrade {
     default upgrade;
     '' close;
   }
   server {
     listen ${PORT};
+    listen [::]:${PORT};
     server_name _;
     location = /healthz {
-      add_header Content-Type text/plain;
+      default_type text/plain;
       return 200 'ok';
     }
     location ${WSPATH} {

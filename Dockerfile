@@ -6,7 +6,7 @@ RUN apk add --no-cache ca-certificates curl unzip nginx gettext \
  && chmod +x /usr/local/bin/xray \
  && rm -f /tmp/xray.zip \
  && apk del curl unzip \
- && mkdir -p /run/nginx /etc/xray
+ && mkdir -p /tmp
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

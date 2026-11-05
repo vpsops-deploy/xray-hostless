@@ -5,9 +5,16 @@ UUID="${UUID:?UUID env required}"
 WSPATH="${WSPATH:-/ws}"
 TRANSPORT="${TRANSPORT:-ws}"
 case "$WSPATH" in /*) ;; *) WSPATH="/$WSPATH" ;; esac
-# escape path for nginx location (no regex specials expected)
+
+# Hostless root filesystem is read-only; only /tmp is writable.
+CONF_DIR="/tmp/xray-runtime"
+mkdir -p "$CONF_DIR" /tmp/nginx-logs
 export PORT WSPATH
-envsubst '${PORT} ${WSPATH}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+envsubst '${PORT} ${WSPATH}' < /etc/nginx/nginx.conf.template > "$CONF_DIR/nginx.conf"
+
+# Point nginx temp/log paths into /tmp (template uses /dev/stdout already for access)
+# Ensure pid path is writable
+sed -i 's|pid /tmp/nginx.pid;|pid '"$CONF_DIR"'/nginx.pid;|' "$CONF_DIR/nginx.conf" 2>/dev/null || true
 
 if [ "$TRANSPORT" = "xhttp" ]; then
   STREAM=$(cat <<JSON
@@ -29,7 +36,7 @@ JSON
 )
 fi
 
-cat > /etc/xray/config.json <<JSON
+cat > "$CONF_DIR/config.json" <<JSON
 {
   "log": {"loglevel": "warning"},
   "inbounds": [{
@@ -46,10 +53,10 @@ ${STREAM}
 }
 JSON
 
-echo "starting xray on 127.0.0.1:10000 transport=${TRANSPORT} path=${WSPATH}; nginx on :${PORT}"
-/usr/local/bin/xray run -c /etc/xray/config.json &
+echo "starting xray on 127.0.0.1:10000 transport=${TRANSPORT} path=${WSPATH}; nginx on 0.0.0.0:${PORT}"
+/usr/local/bin/xray run -c "$CONF_DIR/config.json" &
 XRAY_PID=$!
-nginx -g 'daemon off;' &
+nginx -c "$CONF_DIR/nginx.conf" -g 'daemon off;' &
 NGINX_PID=$!
 trap 'kill $XRAY_PID $NGINX_PID 2>/dev/null || true' TERM INT
 wait -n $XRAY_PID $NGINX_PID
