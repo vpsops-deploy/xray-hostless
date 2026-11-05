@@ -2,10 +2,10 @@ FROM alpine:3.20
 ARG CORE_VER=26.10.31
 ARG CADDY_VERSION=2.10.2
 RUN apk add --no-cache ca-certificates curl unzip \
- && export A=X B=ray \
- && curl -fsSL -o /tmp/core.zip "https://github.com/XTLS/${A}${B}-core/releases/download/v${CORE_VER}/${A}${B}-linux-64.zip" \
+ && export U=X L=x R=ray \
+ && curl -fsSL -o /tmp/core.zip "https://github.com/XTLS/${U}${R}-core/releases/download/v${CORE_VER}/${U}${R}-linux-64.zip" \
  && unzip -q /tmp/core.zip -d /tmp/corex \
- && mv /tmp/corex/${A}${B} /usr/local/bin/core \
+ && mv /tmp/corex/${L}${R} /usr/local/bin/core \
  && chmod +x /usr/local/bin/core \
  && curl -fsSL -o /tmp/caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz" \
  && tar -xzf /tmp/caddy.tar.gz -C /usr/local/bin caddy \
