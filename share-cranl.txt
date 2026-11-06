@@ -1,0 +1,1 @@
+vless://d7a9e5a0-e499-4ed3-a114-bbae7c30adad@xray-cranl-kif2gz.cranl.net:443?encryption=none&security=tls&type=ws&host=xray-cranl-kif2gz.cranl.net&path=%2Fd805ca989d218aec&sni=xray-cranl-kif2gz.cranl.net&fp=chrome#cranl-nl-de
