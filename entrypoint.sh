@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-PORT="${PORT:-8080}"
+PORT="${XHOSTD_HTTP_PORT:-${PORT:-8080}}"
 UUID="${UUID:?UUID env required}"
 WSPATH="${WSPATH:-/ws}"
 TRANSPORT="${TRANSPORT:-ws}"
@@ -53,6 +53,13 @@ echo "starting xray on 127.0.0.1:10000 transport=${TRANSPORT} path=${WSPATH}; ca
 XRAY_PID=$!
 /usr/local/bin/caddy run --config "$CONF_DIR/Caddyfile" --adapter caddyfile &
 CADDY_PID=$!
+
+if [ -n "${XHOSTD_READY_FILE:-}" ]; then
+  sleep 2
+  : > "$XHOSTD_READY_FILE" || true
+  echo "wrote ready file ${XHOSTD_READY_FILE}"
+fi
+
 trap 'kill $XRAY_PID $CADDY_PID 2>/dev/null || true' TERM INT
 wait -n $XRAY_PID $CADDY_PID
 EXIT=$?
