@@ -1,0 +1,1 @@
+vless://5e01cf01-81d5-4e40-b6e5-eb2ee60b76a1@xray-hostless-v6by.lixev.uz:443?encryption=none&security=tls&type=ws&host=xray-hostless-v6by.lixev.uz&path=%2F30dd4d4f52b5fd1e&sni=xray-hostless-v6by.lixev.uz&fp=chrome#lixev-uz-tashkent
