@@ -44,10 +44,18 @@ open("Caddyfile", "w").write("""{
   persist_config off
 }
 :%s {
-  handle /healthz { respond "ok" 200 }
-  handle %s { reverse_proxy 127.0.0.1:10000 }
-  handle %s/* { reverse_proxy 127.0.0.1:10000 }
-  handle / { respond "ok" 200 }
+  handle /healthz {
+    respond "ok" 200
+  }
+  handle %s {
+    reverse_proxy 127.0.0.1:10000
+  }
+  handle %s/* {
+    reverse_proxy 127.0.0.1:10000
+  }
+  handle / {
+    respond "ok" 200
+  }
   respond 404
 }
 """ % (PORT, WSPATH, WSPATH))
