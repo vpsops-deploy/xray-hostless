@@ -1,0 +1,1 @@
+vless://08113d84-6625-4861-9c02-9a0aa0090303@xray-hostless-hobby-shaokai.svc-us1.demo.quave.cloud:443?encryption=none&security=tls&sni=xray-hostless-hobby-shaokai.svc-us1.demo.quave.cloud&fp=chrome&type=ws&host=xray-hostless-hobby-shaokai.svc-us1.demo.quave.cloud&path=/65c750d8985806fa&alpn=http/1.1#Quave-ONE
