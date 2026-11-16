@@ -1,0 +1,1 @@
+vless://48258198-fe87-49f1-a679-87396cb52e42@xray-hostless.go.altare.global:443?encryption=none&security=tls&sni=xray-hostless.go.altare.global&fp=chrome&type=ws&host=xray-hostless.go.altare.global&path=%2Fa12f6e776ca373ea&alpn=http%2F1.1#Altare
