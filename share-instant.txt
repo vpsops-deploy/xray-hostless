@@ -1,0 +1,1 @@
+vless://6c4eb9b0-904d-45e0-b0dc-47354371ed37@xray-hostless.instant.rw:443?encryption=none&security=tls&sni=xray-hostless.instant.rw&fp=chrome&type=ws&host=xray-hostless.instant.rw&path=%2F02b3c84b4c251a5a&alpn=http%2F1.1#InstantCloud
